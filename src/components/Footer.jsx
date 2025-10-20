@@ -121,17 +121,6 @@ const Footer = ({
                 <span className="text-gray-300">{content.contact.email}</span>
               </div>
             </div>
-
-            {/* 订阅表单 */}
-            <div className="mt-6">
-              <h5 className="text-sm font-semibold mb-3">{currentLang === 'zh' ? '订阅我们的资讯' : 'Subscribe to Our Newsletter'}</h5>
-              <div className="flex">
-                <input type="email" placeholder={currentLang === 'zh' ? '您的邮箱' : 'Your email'} className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:border-[#0D7E9C] text-white placeholder-gray-400" />
-                <Button className="bg-[#0D7E9C] hover:bg-[#01847E] text-white px-4 py-2 rounded-r-md transition-colors duration-300">
-                  {currentLang === 'zh' ? '订阅' : 'Subscribe'}
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
