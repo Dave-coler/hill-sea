@@ -82,18 +82,18 @@ const Footer = ({
     }
   };
   const content = footerContent[currentLang];
-  return <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-      {/* 科技感背景装饰 */}
+  return <footer className="relative bg-gradient-to-br from-gray-900/70 via-gray-800/60 to-gray-900/70 backdrop-blur-md text-white overflow-hidden">
+      {/* 科技感背景装饰 - 半透明 */}
       <div className="absolute inset-0">
-        {/* 网格背景 */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        {/* 网格背景 - 更透明 */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
         
-        {/* 动态光效 */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-[#01847E]/10 to-transparent rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-l from-[#0D7E9C]/10 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
+        {/* 动态光效 - 更透明 */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-[#01847E]/5 to-transparent rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-l from-[#0D7E9C]/5 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
         
-        {/* 扫描线效果 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#01847E]/5 to-transparent animate-pulse" />
+        {/* 扫描线效果 - 更透明 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#01847E]/2 to-transparent animate-pulse" />
       </div>
 
       {/* 主要内容区域 - 简洁三列布局 */}
@@ -117,8 +117,8 @@ const Footer = ({
               {content.services.title}
             </h4>
             <div className="grid grid-cols-1 gap-3">
-              {content.services.items.map((item, index) => <a key={index} href="#" className="group relative p-4 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/50 hover:bg-gray-800/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#01847E]/5 to-[#0D7E9C]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {content.services.items.map((item, index) => <a key={index} href="#" className="group relative p-4 bg-gray-800/20 rounded-lg border border-gray-700/30 hover:border-[#01847E]/40 hover:bg-gray-800/30 transition-all duration-300 backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#01847E]/3 to-[#0D7E9C]/3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative flex items-center space-x-3">
                     <div className="w-2 h-2 bg-[#01847E] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{item}</span>
@@ -136,19 +136,19 @@ const Footer = ({
             
             {/* 联系信息 - 简洁卡片式 */}
             <div className="space-y-3">
-              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+              <div className="group p-3 bg-gray-800/20 rounded-lg border border-gray-700/30 hover:border-[#01847E]/30 transition-all duration-300 backdrop-blur-sm">
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4 text-[#01847E]" />
                   <span className="text-sm text-gray-300">{content.contact.address}</span>
                 </div>
               </div>
-              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+              <div className="group p-3 bg-gray-800/20 rounded-lg border border-gray-700/30 hover:border-[#01847E]/30 transition-all duration-300 backdrop-blur-sm">
                 <div className="flex items-center space-x-3">
                   <Phone className="h-4 w-4 text-[#01847E]" />
                   <span className="text-sm text-gray-300">{content.contact.phone}</span>
                 </div>
               </div>
-              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+              <div className="group p-3 bg-gray-800/20 rounded-lg border border-gray-700/30 hover:border-[#01847E]/30 transition-all duration-300 backdrop-blur-sm">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-[#01847E]" />
                   <span className="text-sm text-gray-300">{content.contact.email}</span>
@@ -177,7 +177,7 @@ const Footer = ({
                 href: '#'
               }].map((social, index) => {
                 const Icon = social.icon;
-                return <a key={index} href={social.href} className="w-10 h-10 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700/50 hover:border-[#01847E]/50 hover:bg-[#01847E]/20 transition-all duration-300 group">
+                return <a key={index} href={social.href} className="w-10 h-10 bg-gray-800/30 rounded-lg flex items-center justify-center border border-gray-700/40 hover:border-[#01847E]/40 hover:bg-[#01847E]/15 transition-all duration-300 group backdrop-blur-sm">
                       <Icon className="h-5 w-5 text-gray-400 group-hover:text-[#01847E] transition-colors duration-300" />
                     </a>;
               })}
@@ -188,7 +188,7 @@ const Footer = ({
       </div>
 
       {/* 底部版权信息 - 极简设计 */}
-      <div className="relative z-10 border-t border-gray-800/50 bg-gray-900/50 backdrop-blur-sm">
+      <div className="relative z-10 border-t border-gray-700/30 bg-gray-900/40 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-xs text-gray-400">{content.copyright}</p>
@@ -205,7 +205,7 @@ const Footer = ({
       </div>
 
       {/* 返回顶部按钮 - 科技感设计 */}
-      {showBackToTop && <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-40 hover:scale-110 hover:shadow-2xl group">
+      {showBackToTop && <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#01847E]/90 to-[#0D7E9C]/90 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-40 hover:scale-110 hover:shadow-2xl group backdrop-blur-sm">
           <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform duration-300" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
         </button>}
