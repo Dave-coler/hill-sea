@@ -58,19 +58,6 @@ const Footer = ({
         title: '产品服务',
         items: ['智能电驱系统', '新能源重卡', '技术支持', '售后服务']
       },
-      features: {
-        title: '核心优势',
-        items: [{
-          icon: Zap,
-          text: '高效节能'
-        }, {
-          icon: Shield,
-          text: '安全可靠'
-        }, {
-          icon: Cpu,
-          text: '智能控制'
-        }]
-      },
       copyright: '© 2024 上海汉势新能源科技有限公司。保留所有权利。'
     },
     en: {
@@ -90,19 +77,6 @@ const Footer = ({
       services: {
         title: 'Products & Services',
         items: ['Smart Drive System', 'Electric Trucks', 'Technical Support', 'After-sales Service']
-      },
-      features: {
-        title: 'Core Advantages',
-        items: [{
-          icon: Zap,
-          text: 'High Efficiency'
-        }, {
-          icon: Shield,
-          text: 'Safety & Reliability'
-        }, {
-          icon: Cpu,
-          text: 'Smart Control'
-        }]
       },
       copyright: '© 2024 Shanghai Hillsea New Energy Technology Co., Ltd. All rights reserved.'
     }
@@ -127,38 +101,13 @@ const Footer = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* 公司信息 - 左侧 */}
           <div className="space-y-6">
-            {/* Logo和公司名 */}
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <img src="https://ecosyn-1259516302.cos.ap-singapore.myqcloud.com/Hillsea/LOGO/HILLSEAAAw.png?q-sign-algorithm=sha1&q-ak=AKIDp2UwjoezujR-4ORz63H6M3Z_FzNlbWqzRX2t0rL591mV4TtwN2NkIVpV40atCgQ-&q-sign-time=1760922231;1760925831&q-key-time=1760922231;1760925831&q-header-list=host&q-url-param-list=ci-process&q-signature=1f1fe0205e84693a2bb81f10a4f879f285af6c76&x-cos-security-token=JPXNoaYDJYj28gNcQ4kkS5aQHY1Y7UXadce6f50d421a9db930a644b7fb8756b4etc1BOYkLGiesCSZnVQ7h-HrbY-dO-T3jGp4hrPIVKCBCoOmRAXdwxUwXhkS2YLz2ybudkG3LbsOy1q6H4KIV8enldhvNcLKv6xiQSuVBbrLKmBmO6P868DQ-1ZRC4eKgQsozpDjw8PJ_dylcwQB1YHshjJN9a0UzrPUxLFaUgWKpkucPMZUlKoUa0hp6TVDS3ISS3LvvK28fRgVgwr9RuxoN22qIv01mo71uo-hKbYnAhsn2ZaezMi_itqoqpCwJUaYIxycKkcVhbqsf42n0Q&ci-process=originImage" alt="HILLSEA Logo" className="h-12 w-auto" />
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-lg opacity-20 blur-sm" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gradient-company">{content.company}</h3>
-                <div className="flex items-center space-x-2 text-xs text-gray-400">
-                  <Award className="h-3 w-3" />
-                  <span>ISO 9001:2015</span>
-                </div>
-              </div>
+            {/* Logo和公司名 - 简化版 */}
+            <div className="flex flex-col items-center lg:items-start space-y-4">
+              <img src="https://ecosyn-1259516302.cos.ap-singapore.myqcloud.com/Hillsea/LOGO/HILLSEAAAw.png?q-sign-algorithm=sha1&q-ak=AKIDp2UwjoezujR-4ORz63H6M3Z_FzNlbWqzRX2t0rL591mV4TtwN2NkIVpV40atCgQ-&q-sign-time=1760922231;1760925831&q-key-time=1760922231;1760925831&q-header-list=host&q-url-param-list=ci-process&q-signature=1f1fe0205e84693a2bb81f10a4f879f285af6c76&x-cos-security-token=JPXNoaYDJYj28gNcQ4kkS5aQHY1Y7UXadce6f50d421a9db930a644b7fb8756b4etc1BOYkLGiesCSZnVQ7h-HrbY-dO-T3jGp4hrPIVKCBCoOmRAXdwxUwXhkS2YLz2ybudkG3LbsOy1q6H4KIV8enldhvNcLKv6xiQSuVBbrLKmBmO6P868DQ-1ZRC4eKgQsozpDjw8PJ_dylcwQB1YHshjJN9a0UzrPUxLFaUgWKpkucPMZUlKoUa0hp6TVDS3ISS3LvvK28fRgVgwr9RuxoN22qIv01mo71uo-hKbYnAhsn2ZaezMi_itqoqpCwJUaYIxycKkcVhbqsf42n0Q&ci-process=originImage" alt="HILLSEA Logo" className="h-16 w-auto" />
+              <h3 className="text-xl font-bold text-gradient-company text-center lg:text-left">{content.company}</h3>
             </div>
             
             <p className="text-gray-300 text-sm leading-relaxed">{content.description}</p>
-            
-            {/* 核心优势 - 科技感展示 */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">{content.features.title}</h4>
-              <div className="space-y-2">
-                {content.features.items.map((feature, index) => {
-                const Icon = feature.icon;
-                return <div key={index} className="flex items-center space-x-3 group">
-                      <div className="w-8 h-8 bg-gradient-to-br from-[#01847E]/20 to-[#0D7E9C]/20 rounded-lg flex items-center justify-center border border-[#01847E]/30 group-hover:border-[#01847E]/60 transition-all duration-300">
-                        <Icon className="h-4 w-4 text-[#01847E]" />
-                      </div>
-                      <span className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{feature.text}</span>
-                    </div>;
-              })}
-              </div>
-            </div>
           </div>
 
           {/* 产品服务 - 中间 */}
