@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // @ts-ignore;
 import { Button } from '@/components/ui';
 // @ts-ignore;
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, ArrowUp, Globe, Clock, Award } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, ArrowUp, Globe, Clock, Award, Zap, Shield, Cpu } from 'lucide-react';
 
 const Footer = ({
   t,
@@ -58,6 +58,19 @@ const Footer = ({
         title: '产品服务',
         items: ['智能电驱系统', '新能源重卡', '技术支持', '售后服务']
       },
+      features: {
+        title: '核心优势',
+        items: [{
+          icon: Zap,
+          text: '高效节能'
+        }, {
+          icon: Shield,
+          text: '安全可靠'
+        }, {
+          icon: Cpu,
+          text: '智能控制'
+        }]
+      },
       copyright: '© 2024 上海汉势新能源科技有限公司。保留所有权利。'
     },
     en: {
@@ -78,148 +91,174 @@ const Footer = ({
         title: 'Products & Services',
         items: ['Smart Drive System', 'Electric Trucks', 'Technical Support', 'After-sales Service']
       },
+      features: {
+        title: 'Core Advantages',
+        items: [{
+          icon: Zap,
+          text: 'High Efficiency'
+        }, {
+          icon: Shield,
+          text: 'Safety & Reliability'
+        }, {
+          icon: Cpu,
+          text: 'Smart Control'
+        }]
+      },
       copyright: '© 2024 Shanghai Hillsea New Energy Technology Co., Ltd. All rights reserved.'
     }
   };
   const content = footerContent[currentLang];
-  return <footer className="bg-gray-900 text-white relative overflow-hidden">
-      {/* 背景装饰 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950" />
-      <div className="absolute top-0 left-0 w-64 h-64 bg-[#01847E]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0D7E9C]/5 rounded-full blur-3xl" />
-      
-      {/* 主要内容区域 - 三列布局 */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* 公司信息 - 第一列 */}
-          <div className="lg:col-span-1">
-            <img src="https://ecosyn-1259516302.cos.ap-singapore.myqcloud.com/Hillsea/LOGO/HILLSEAAAw.png?q-sign-algorithm=sha1&q-ak=AKIDp2UwjoezujR-4ORz63H6M3Z_FzNlbWqzRX2t0rL591mV4TtwN2NkIVpV40atCgQ-&q-sign-time=1760922231;1760925831&q-key-time=1760922231;1760925831&q-header-list=host&q-url-param-list=ci-process&q-signature=1f1fe0205e84693a2bb81f10a4f879f285af6c76&x-cos-security-token=JPXNoaYDJYj28gNcQ4kkS5aQHY1Y7UXadce6f50d421a9db930a644b7fb8756b4etc1BOYkLGiesCSZnVQ7h-HrbY-dO-T3jGp4hrPIVKCBCoOmRAXdwxUwXhkS2YLz2ybudkG3LbsOy1q6H4KIV8enldhvNcLKv6xiQSuVBbrLKmBmO6P868DQ-1ZRC4eKgQsozpDjw8PJ_dylcwQB1YHshjJN9a0UzrPUxLFaUgWKpkucPMZUlKoUa0hp6TVDS3ISS3LvvK28fRgVgwr9RuxoN22qIv01mo71uo-hKbYnAhsn2ZaezMi_itqoqpCwJUaYIxycKkcVhbqsf42n0Q&ci-process=originImage" alt="HILLSEA Logo" className="h-14 w-auto mb-6" />
-            <h3 className="text-2xl font-bold mb-4 text-[#01847E]">{content.company}</h3>
-            <p className="text-gray-300 mb-6 leading-relaxed text-sm">{content.description}</p>
-            
-            {/* 公司统计信息 */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="text-center p-4 bg-gray-800/50 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
-                <div className="text-2xl font-bold text-[#01847E]">10+</div>
-                <div className="text-xs text-gray-400">{currentLang === 'zh' ? '年经验' : 'Years Experience'}</div>
+  return <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      {/* 科技感背景装饰 */}
+      <div className="absolute inset-0">
+        {/* 网格背景 */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        
+        {/* 动态光效 */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-[#01847E]/10 to-transparent rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-l from-[#0D7E9C]/10 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
+        
+        {/* 扫描线效果 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#01847E]/5 to-transparent animate-pulse" />
+      </div>
+
+      {/* 主要内容区域 - 简洁三列布局 */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* 公司信息 - 左侧 */}
+          <div className="space-y-6">
+            {/* Logo和公司名 */}
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <img src="https://ecosyn-1259516302.cos.ap-singapore.myqcloud.com/Hillsea/LOGO/HILLSEAAAw.png?q-sign-algorithm=sha1&q-ak=AKIDp2UwjoezujR-4ORz63H6M3Z_FzNlbWqzRX2t0rL591mV4TtwN2NkIVpV40atCgQ-&q-sign-time=1760922231;1760925831&q-key-time=1760922231;1760925831&q-header-list=host&q-url-param-list=ci-process&q-signature=1f1fe0205e84693a2bb81f10a4f879f285af6c76&x-cos-security-token=JPXNoaYDJYj28gNcQ4kkS5aQHY1Y7UXadce6f50d421a9db930a644b7fb8756b4etc1BOYkLGiesCSZnVQ7h-HrbY-dO-T3jGp4hrPIVKCBCoOmRAXdwxUwXhkS2YLz2ybudkG3LbsOy1q6H4KIV8enldhvNcLKv6xiQSuVBbrLKmBmO6P868DQ-1ZRC4eKgQsozpDjw8PJ_dylcwQB1YHshjJN9a0UzrPUxLFaUgWKpkucPMZUlKoUa0hp6TVDS3ISS3LvvK28fRgVgwr9RuxoN22qIv01mo71uo-hKbYnAhsn2ZaezMi_itqoqpCwJUaYIxycKkcVhbqsf42n0Q&ci-process=originImage" alt="HILLSEA Logo" className="h-12 w-auto" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-lg opacity-20 blur-sm" />
               </div>
-              <div className="text-center p-4 bg-gray-800/50 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
-                <div className="text-2xl font-bold text-[#01847E]">50+</div>
-                <div className="text-xs text-gray-400">{currentLang === 'zh' ? '合作伙伴' : 'Partners'}</div>
+              <div>
+                <h3 className="text-xl font-bold text-gradient-company">{content.company}</h3>
+                <div className="flex items-center space-x-2 text-xs text-gray-400">
+                  <Award className="h-3 w-3" />
+                  <span>ISO 9001:2015</span>
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-gray-300 text-sm leading-relaxed">{content.description}</p>
+            
+            {/* 核心优势 - 科技感展示 */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">{content.features.title}</h4>
+              <div className="space-y-2">
+                {content.features.items.map((feature, index) => {
+                const Icon = feature.icon;
+                return <div key={index} className="flex items-center space-x-3 group">
+                      <div className="w-8 h-8 bg-gradient-to-br from-[#01847E]/20 to-[#0D7E9C]/20 rounded-lg flex items-center justify-center border border-[#01847E]/30 group-hover:border-[#01847E]/60 transition-all duration-300">
+                        <Icon className="h-4 w-4 text-[#01847E]" />
+                      </div>
+                      <span className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{feature.text}</span>
+                    </div>;
+              })}
               </div>
             </div>
           </div>
 
-          {/* 产品服务 - 第二列 */}
-          <div className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white flex items-center">
+          {/* 产品服务 - 中间 */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold text-white flex items-center">
               <Globe className="h-5 w-5 mr-2 text-[#01847E]" />
               {content.services.title}
             </h4>
-            <ul className="space-y-4">
-              {content.services.items.map((item, index) => <li key={index}>
-                  <a href="#" className="text-gray-300 hover:text-[#01847E] transition-colors duration-300 flex items-center group py-2 px-3 rounded-lg hover:bg-gray-800/30">
-                    <span className="w-2 h-2 bg-[#01847E] rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    {item}
-                  </a>
-                </li>)}
-            </ul>
+            <div className="grid grid-cols-1 gap-3">
+              {content.services.items.map((item, index) => <a key={index} href="#" className="group relative p-4 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/50 hover:bg-gray-800/50 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#01847E]/5 to-[#0D7E9C]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#01847E] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">{item}</span>
+                  </div>
+                </a>)}
+            </div>
           </div>
 
-          {/* 联系信息和社交媒体 - 第三列 */}
-          <div className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white flex items-center">
+          {/* 联系信息和社交媒体 - 右侧 */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold text-white flex items-center">
               <Mail className="h-5 w-5 mr-2 text-[#01847E]" />
               {content.contact.title}
             </h4>
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start space-x-3 group">
-                <div className="w-10 h-10 bg-[#01847E]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#01847E]/20 transition-colors duration-300 mt-0.5">
-                  <MapPin className="h-5 w-5 text-[#01847E]" />
+            
+            {/* 联系信息 - 简洁卡片式 */}
+            <div className="space-y-3">
+              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-4 w-4 text-[#01847E]" />
+                  <span className="text-sm text-gray-300">{content.contact.address}</span>
                 </div>
-                <span className="text-gray-300 text-sm leading-relaxed">{content.contact.address}</span>
               </div>
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-[#01847E]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#01847E]/20 transition-colors duration-300">
-                  <Phone className="h-5 w-5 text-[#01847E]" />
+              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+                <div className="flex items-center space-x-3">
+                  <Phone className="h-4 w-4 text-[#01847E]" />
+                  <span className="text-sm text-gray-300">{content.contact.phone}</span>
                 </div>
-                <span className="text-gray-300 text-sm">{content.contact.phone}</span>
               </div>
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-[#01847E]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#01847E]/20 transition-colors duration-300">
-                  <Mail className="h-5 w-5 text-[#01847E]" />
+              <div className="group p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/30 transition-all duration-300">
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-4 w-4 text-[#01847E]" />
+                  <span className="text-sm text-gray-300">{content.contact.email}</span>
                 </div>
-                <span className="text-gray-300 text-sm">{content.contact.email}</span>
-              </div>
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-[#01847E]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#01847E]/20 transition-colors duration-300">
-                  <Clock className="h-5 w-5 text-[#01847E]" />
-                </div>
-                <span className="text-gray-300 text-sm">{content.contact.workTime}</span>
               </div>
             </div>
 
-            {/* 社交媒体 */}
-            <div>
-              <h5 className="text-lg font-semibold mb-4 text-white">{content.follow.title}</h5>
-              <p className="text-gray-400 text-sm mb-4">{content.follow.desc}</p>
-              <div className="flex flex-wrap gap-3">
-                <a href="#" className="w-12 h-12 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group hover:scale-110">
-                  <Facebook className="h-6 w-6 text-[#01847E] group-hover:text-white transition-colors duration-300" />
-                </a>
-                <a href="#" className="w-12 h-12 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group hover:scale-110">
-                  <Twitter className="h-6 w-6 text-[#01847E] group-hover:text-white transition-colors duration-300" />
-                </a>
-                <a href="#" className="w-12 h-12 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group hover:scale-110">
-                  <Linkedin className="h-6 w-6 text-[#01847E] group-hover:text-white transition-colors duration-300" />
-                </a>
-                <a href="#" className="w-12 h-12 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group hover:scale-110">
-                  <Instagram className="h-6 w-6 text-[#01847E] group-hover:text-white transition-colors duration-300" />
-                </a>
-                <a href="#" className="w-12 h-12 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group hover:scale-110">
-                  <Youtube className="h-6 w-6 text-[#01847E] group-hover:text-white transition-colors duration-300" />
-                </a>
+            {/* 社交媒体 - 简洁图标行 */}
+            <div className="space-y-3">
+              <p className="text-xs text-gray-400 uppercase tracking-wider">{content.follow.title}</p>
+              <div className="flex space-x-2">
+                {[{
+                icon: Facebook,
+                href: '#'
+              }, {
+                icon: Twitter,
+                href: '#'
+              }, {
+                icon: Linkedin,
+                href: '#'
+              }, {
+                icon: Instagram,
+                href: '#'
+              }, {
+                icon: Youtube,
+                href: '#'
+              }].map((social, index) => {
+                const Icon = social.icon;
+                return <a key={index} href={social.href} className="w-10 h-10 bg-gray-800/50 rounded-lg flex items-center justify-center border border-gray-700/50 hover:border-[#01847E]/50 hover:bg-[#01847E]/20 transition-all duration-300 group">
+                      <Icon className="h-5 w-5 text-gray-400 group-hover:text-[#01847E] transition-colors duration-300" />
+                    </a>;
+              })}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 底部版权信息 - 简化版 */}
-      <div className="relative z-10 border-t border-gray-800 bg-gray-950/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
-            {/* 版权信息 */}
-            <div className="flex flex-col items-center lg:items-start space-y-2">
-              <p className="text-gray-400 text-sm">{content.copyright}</p>
-              <div className="flex items-center space-x-2 text-xs text-gray-500">
-                <Award className="h-3 w-3" />
-                <span>{currentLang === 'zh' ? 'ISO 9001:2015 认证企业' : 'ISO 9001:2015 Certified'}</span>
-              </div>
-            </div>
-            
-            {/* 法律链接 */}
-            <div className="flex flex-wrap justify-center lg:justify-end space-x-6 text-sm">
+      {/* 底部版权信息 - 极简设计 */}
+      <div className="relative z-10 border-t border-gray-800/50 bg-gray-900/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-xs text-gray-400">{content.copyright}</p>
+            <div className="flex space-x-6 text-xs">
               <a href="#" className="text-gray-400 hover:text-[#01847E] transition-colors duration-300">
                 {currentLang === 'zh' ? '隐私政策' : 'Privacy Policy'}
               </a>
               <a href="#" className="text-gray-400 hover:text-[#01847E] transition-colors duration-300">
                 {currentLang === 'zh' ? '服务条款' : 'Terms of Service'}
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#01847E] transition-colors duration-300">
-                {currentLang === 'zh' ? '网站地图' : 'Sitemap'}
-              </a>
-              <a href="#" className="text-gray-400 hover:text-[#01847E] transition-colors duration-300">
-                {currentLang === 'zh' ? '法律声明' : 'Legal Notice'}
-              </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 返回顶部按钮 */}
-      {showBackToTop && <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-14 h-14 bg-[#01847E] hover:bg-[#0D7E9C] text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-40 hover:scale-110 hover:shadow-2xl group">
-          <ArrowUp className="h-6 w-6 group-hover:-translate-y-1 transition-transform duration-300" />
+      {/* 返回顶部按钮 - 科技感设计 */}
+      {showBackToTop && <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-40 hover:scale-110 hover:shadow-2xl group">
+          <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
         </button>}
     </footer>;
 };
