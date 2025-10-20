@@ -41,32 +41,32 @@ const Footer = ({
   };
   const footerContent = {
     zh: {
-      company: '海希尔新能源科技（深圳）有限公司',
+      company: '上海汉势新能源科技有限公司（简称"HILLSEA"）',
       description: '专注于新能源智能重卡研发与制造，为全球客户提供绿色、智能、高效的运输解决方案。',
       contact: {
         title: '联系我们',
-        address: '深圳市南山区科技园南区',
+        address: '上海市闵行区剑川路955号',
         phone: '+86 755-8888-9999',
         email: 'info@hillsea.com'
       },
       follow: {
         title: '关注我们'
       },
-      copyright: '© 2024 海希尔新能源科技（深圳）有限公司。保留所有权利。'
+      copyright: '© 2024 上海汉势新能源科技有限公司。保留所有权利。'
     },
     en: {
-      company: 'Hillsea New Energy Technology (Shenzhen) Co., Ltd.',
+      company: 'Shanghai Hillsea New Energy Technology Co., Ltd.',
       description: 'Focusing on the research, development and manufacturing of new energy intelligent heavy trucks, providing green, intelligent and efficient transportation solutions for global customers.',
       contact: {
         title: 'Contact Us',
-        address: 'Nanshan District, Shenzhen, China',
+        address: 'No. 955 Jianchuan Road, Minhang District, Shanghai, China',
         phone: '+86 755-8888-9999',
         email: 'info@hillsea.com'
       },
       follow: {
         title: 'Follow Us'
       },
-      copyright: '© 2024 Hillsea New Energy Technology (Shenzhen) Co., Ltd. All rights reserved.'
+      copyright: '© 2024 Shanghai Hillsea New Energy Technology Co., Ltd. All rights reserved.'
     }
   };
   const content = footerContent[currentLang];
