@@ -18,7 +18,6 @@ const HeroSection = ({
   const heroRef = useRef(null);
 
   // 鼠标移动效果
-  // 鼠标移动效果
   useEffect(() => {
     const handleMouseMove = e => {
       if (heroRef.current) {
