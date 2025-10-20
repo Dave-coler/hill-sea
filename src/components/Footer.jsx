@@ -85,20 +85,20 @@ const Footer = ({
             <div>
               <h4 className="text-lg font-semibold mb-4">{content.follow.title}</h4>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                  <Facebook className="h-5 w-5" />
+                <a href="#" className="w-10 h-10 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group">
+                  <Facebook className="h-5 w-5 text-[#01847E] group-hover:text-white transition-colors duration-300" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                  <Twitter className="h-5 w-5" />
+                <a href="#" className="w-10 h-10 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group">
+                  <Twitter className="h-5 w-5 text-[#01847E] group-hover:text-white transition-colors duration-300" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                  <Linkedin className="h-5 w-5" />
+                <a href="#" className="w-10 h-10 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group">
+                  <Linkedin className="h-5 w-5 text-[#01847E] group-hover:text-white transition-colors duration-300" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                  <Instagram className="h-5 w-5" />
+                <a href="#" className="w-10 h-10 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group">
+                  <Instagram className="h-5 w-5 text-[#01847E] group-hover:text-white transition-colors duration-300" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                  <Youtube className="h-5 w-5" />
+                <a href="#" className="w-10 h-10 border-2 border-[#01847E] rounded-full flex items-center justify-center hover:bg-[#01847E] transition-all duration-300 group">
+                  <Youtube className="h-5 w-5 text-[#01847E] group-hover:text-white transition-colors duration-300" />
                 </a>
               </div>
             </div>
