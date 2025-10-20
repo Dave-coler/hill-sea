@@ -1,0 +1,253 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 主色调 - 公司绿色系 */
+    --primary: 178 78% 30%; /* #01847E */
+    --primary-foreground: 0 0% 100%;
+    
+    /* 次要色调 - 深蓝色系 */
+    --secondary: 194 71% 45%; /* #0D7E9C */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* 背景色 */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    /* 卡片色 */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    /* 弹出层色 */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* 静音色 */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* 强调色 */
+    --accent: 178 78% 30%; /* 使用主色作为强调色 */
+    --accent-foreground: 0 0% 100%;
+
+    /* 危险色 */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* 边框色 */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 178 78% 30%; /* 使用主色作为焦点环颜色 */
+
+    /* 圆角 */
+    --radius: 0.5rem;
+    
+    /* 自定义颜色变量 */
+    --company-green: 178 78% 30%; /* #01847E */
+    --company-blue: 194 71% 45%; /* #0D7E9C */
+    --company-light-green: 178 78% 40%; /* 浅绿色 */
+    --company-dark-green: 178 78% 25%; /* 深绿色 */
+  }
+
+  .dark {
+    /* 深色模式背景 */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    /* 深色模式卡片 */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    /* 深色模式弹出层 */
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    /* 深色模式主色 */
+    --primary: 178 78% 40%; /* 深色模式下使用更亮的绿色 */
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    /* 深色模式次要色 */
+    --secondary: 194 71% 55%; /* 深色模式下使用更亮的蓝色 */
+    --secondary-foreground: 210 40% 98%;
+
+    /* 深色模式静音色 */
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    /* 深色模式强调色 */
+    --accent: 178 78% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    /* 深色模式危险色 */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* 深色模式边框 */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 178 78% 40%;
+    
+    /* 深色模式自定义颜色 */
+    --company-green: 178 78% 40%;
+    --company-blue: 194 71% 55%;
+    --company-light-green: 178 78% 50%;
+    --company-dark-green: 178 78% 35%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* 自定义工具类 */
+@layer utilities {
+  /* 公司绿色系 */
+  .text-company-green {
+    color: hsl(var(--company-green));
+  }
+  
+  .bg-company-green {
+    background-color: hsl(var(--company-green));
+  }
+  
+  .border-company-green {
+    border-color: hsl(var(--company-green));
+  }
+  
+  .hover\:bg-company-green:hover {
+    background-color: hsl(var(--company-green));
+  }
+  
+  .hover\:text-company-green:hover {
+    color: hsl(var(--company-green));
+  }
+  
+  .hover\:border-company-green:hover {
+    border-color: hsl(var(--company-green));
+  }
+  
+  /* 公司蓝色系 */
+  .text-company-blue {
+    color: hsl(var(--company-blue));
+  }
+  
+  .bg-company-blue {
+    background-color: hsl(var(--company-blue));
+  }
+  
+  .border-company-blue {
+    border-color: hsl(var(--company-blue));
+  }
+  
+  .hover\:bg-company-blue:hover {
+    background-color: hsl(var(--company-blue));
+  }
+  
+  .hover\:text-company-blue:hover {
+    color: hsl(var(--company-blue));
+  }
+  
+  .hover\:border-company-blue:hover {
+    border-color: hsl(var(--company-blue));
+  }
+  
+  /* 渐变背景 */
+  .bg-gradient-company {
+    background: linear-gradient(135deg, hsl(var(--company-green)), hsl(var(--company-blue)));
+  }
+  
+  .bg-gradient-company-reverse {
+    background: linear-gradient(135deg, hsl(var(--company-blue)), hsl(var(--company-green)));
+  }
+  
+  /* 文字渐变 */
+  .text-gradient-company {
+    background: linear-gradient(135deg, hsl(var(--company-green)), hsl(var(--company-blue)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* 阴影效果 */
+  .shadow-company {
+    box-shadow: 0 4px 20px hsl(var(--company-green) / 0.15);
+  }
+  
+  .shadow-company-lg {
+    box-shadow: 0 8px 40px hsl(var(--company-green) / 0.25);
+  }
+  
+  /* 动画效果 */
+  .animate-pulse-company {
+    animation: pulse-company 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-company {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+      background-color: hsl(var(--company-green) / 0.1);
+    }
+  }
+  
+  /* 按钮样式 */
+  .btn-company {
+    @apply bg-company-green text-white hover:bg-company-dark-green transition-all duration-300;
+  }
+  
+  .btn-company-outline {
+    @apply border-2 border-company-green text-company-green hover:bg-company-green hover:text-white transition-all duration-300;
+  }
+  
+  .btn-company-secondary {
+    @apply bg-company-blue text-white hover:bg-opacity-90 transition-all duration-300;
+  }
+  
+  /* 卡片样式 */
+  .card-company {
+    @apply bg-white border border-gray-200 rounded-xl shadow-company hover:shadow-company-lg transition-all duration-300;
+  }
+  
+  .card-company-dark {
+    @apply bg-gray-800 border border-gray-700 rounded-xl shadow-company hover:shadow-company-lg transition-all duration-300;
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--company-green));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--company-dark-green));
+}
+
+/* 选择文本样式 */
+::selection {
+  background: hsl(var(--company-green) / 0.2);
+  color: hsl(var(--company-green));
+}
+
+::-moz-selection {
+  background: hsl(var(--company-green) / 0.2);
+  color: hsl(var(--company-green));
+}
