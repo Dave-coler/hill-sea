@@ -41,7 +41,7 @@ const Footer = ({
   };
   const footerContent = {
     zh: {
-      company: '上海汉势新能源科技有限公司（简称"HILLSEA"）',
+      company: '上海汉势新能源科技有限公司',
       description: '专注于新能源智能重卡研发与制造，为全球客户提供绿色、智能、高效的运输解决方案。',
       contact: {
         title: '联系我们',
@@ -78,7 +78,7 @@ const Footer = ({
           <div className="md:col-span-1">
             {/* 公司LOGO */}
             <img src="https://ecosyn-1259516302.cos.ap-singapore.myqcloud.com/Hillsea/LOGO/HILLSEAAAw.png?q-sign-algorithm=sha1&q-ak=AKIDp2UwjoezujR-4ORz63H6M3Z_FzNlbWqzRX2t0rL591mV4TtwN2NkIVpV40atCgQ-&q-sign-time=1760922231;1760925831&q-key-time=1760922231;1760925831&q-header-list=host&q-url-param-list=ci-process&q-signature=1f1fe0205e84693a2bb81f10a4f879f285af6c76&x-cos-security-token=JPXNoaYDJYj28gNcQ4kkS5aQHY1Y7UXadce6f50d421a9db930a644b7fb8756b4etc1BOYkLGiesCSZnVQ7h-HrbY-dO-T3jGp4hrPIVKCBCoOmRAXdwxUwXhkS2YLz2ybudkG3LbsOy1q6H4KIV8enldhvNcLKv6xiQSuVBbrLKmBmO6P868DQ-1ZRC4eKgQsozpDjw8PJ_dylcwQB1YHshjJN9a0UzrPUxLFaUgWKpkucPMZUlKoUa0hp6TVDS3ISS3LvvK28fRgVgwr9RuxoN22qIv01mo71uo-hKbYnAhsn2ZaezMi_itqoqpCwJUaYIxycKkcVhbqsf42n0Q&ci-process=originImage" alt="HILLSEA Logo" className="h-12 w-auto mb-4" />
-            <h3 className="text-xl font-bold mb-4 text-[#0D7E9C]">{content.company}</h3>
+            <h3 className="text-xl font-bold mb-4 text-[#01847E]">{content.company}</h3>
             <p className="text-gray-300 mb-6 leading-relaxed">{content.description}</p>
             
             {/* 社交媒体链接 */}
