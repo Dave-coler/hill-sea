@@ -6,16 +6,59 @@ import { Button } from '@/components/ui';
 import { Play, ArrowRight, Battery, DollarSign, Shield } from 'lucide-react';
 
 const HeroSection = ({
-  t,
-  scrollY,
-  setShowROICalculator,
-  setShowContactForm
+  currentLang,
+  scrollToSection
 }) => {
   const [mousePosition, setMousePosition] = useState({
     x: 0,
     y: 0
   });
   const heroRef = useRef(null);
+
+  // 多语言内容
+  const content = {
+    zh: {
+      hero: {
+        title: '新能源智能重卡',
+        subtitle: '引领绿色运输革命',
+        description: '融合尖端科技与环保理念，打造高效、智能、零排放的重卡解决方案',
+        cta1: '了解产品',
+        cta2: '联系我们',
+        videoTitle: '观看产品演示',
+        features: [{
+          title: '节省80%燃料成本',
+          desc: '即插即用，立即见效'
+        }, {
+          title: '零改装上路',
+          desc: '保持原有车辆结构'
+        }, {
+          title: '智能电驱系统',
+          desc: 'AI优化能源管理'
+        }]
+      }
+    },
+    en: {
+      hero: {
+        title: 'New Energy Smart Truck',
+        subtitle: 'Leading Green Transportation Revolution',
+        description: 'Integrating cutting-edge technology with environmental protection to create efficient, intelligent, zero-emission truck solutions',
+        cta1: 'Learn More',
+        cta2: 'Contact Us',
+        videoTitle: 'Watch Product Demo',
+        features: [{
+          title: 'Save 80% Fuel Cost',
+          desc: 'Plug and play, immediate results'
+        }, {
+          title: 'Zero Modification',
+          desc: 'Maintain original vehicle structure'
+        }, {
+          title: 'Smart Drive System',
+          desc: 'AI optimized energy management'
+        }]
+      }
+    }
+  };
+  const t = content[currentLang];
 
   // 鼠标移动效果
   useEffect(() => {
@@ -69,10 +112,7 @@ const HeroSection = ({
       <div className="relative z-10 h-full flex flex-col justify-between py-12">
         {/* 顶部标题区域 - 添加上边距下移100px */}
         <div className="text-center px-4 sm:px-6 lg:px-8 mt-[100px]">
-          <div className="max-w-4xl mx-auto space-y-6" style={{
-          transform: `translateY(${scrollY * 0.3}px)`,
-          opacity: 1 - scrollY * 0.001
-        }}>
+          <div className="max-w-4xl mx-auto space-y-6">
             {/* 主标题 - 删除⚡图标，改为白色 */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               <span className="text-white block">
@@ -110,13 +150,13 @@ const HeroSection = ({
 
           {/* CTA 按钮组 - 调整大小和间距 */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <Button onClick={() => setShowROICalculator(true)} className="bg-[#0D7E9C] hover:bg-[#0D7E9C]/90 text-white px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl group">
+            <Button onClick={() => scrollToSection('roi')} className="bg-[#0D7E9C] hover:bg-[#0D7E9C]/90 text-white px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl group">
               <span className="flex items-center">
                 {t.hero.cta1}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </Button>
-            <Button onClick={() => setShowContactForm(true)} variant="outline" className="border-2 border-[#0D7E9C] text-[#0D7E9C] hover:bg-[#0D7E9C]/10 px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+            <Button onClick={() => scrollToSection('contact')} variant="outline" className="border-2 border-[#0D7E9C] text-[#0D7E9C] hover:bg-[#0D7E9C]/10 px-6 py-3 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105">
               <span className="flex items-center">
                 <Play className="mr-2 h-4 w-4" />
                 {t.hero.cta2}
