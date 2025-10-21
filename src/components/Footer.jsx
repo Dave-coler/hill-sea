@@ -220,34 +220,36 @@ const Footer = ({
             <p className="text-gray-300 text-sm leading-relaxed">{content.description}</p>
           </div>
 
-          {/* 相关链接 - 中间 */}
-          <div className="space-y-6">
+          {/* 相关链接 - 中间 - 紧凑化显示 */}
+          <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white flex items-center">
               <Globe className="h-5 w-5 mr-2 text-[#01847E]" />
               {content.links.title}
             </h4>
-            <div className="grid grid-cols-1 gap-2 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
-              {content.links.items.map((item, index) => <a key={index} href={item.url} target="_blank" rel="noopener noreferrer" className="group relative p-3 bg-gray-800/30 rounded-lg border border-gray-700/50 hover:border-[#01847E]/50 hover:bg-gray-800/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#01847E]/5 to-[#0D7E9C]/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="grid grid-cols-1 gap-1 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
+              {content.links.items.map((item, index) => <a key={index} href={item.url} target="_blank" rel="noopener noreferrer" className="group relative p-2 bg-gray-800/20 rounded border border-gray-700/30 hover:border-[#01847E]/40 hover:bg-gray-800/40 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#01847E]/3 to-[#0D7E9C]/3 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="relative">
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-[#01847E] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">
-                          {currentLang === 'zh' ? item.name : item.nameEn}
-                        </span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2 flex-1 min-w-0">
+                        <div className="w-1.5 h-1.5 bg-[#01847E] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-medium text-gray-300 group-hover:text-white transition-colors duration-300 truncate">
+                            {currentLang === 'zh' ? item.name : item.nameEn}
+                          </div>
+                          <div className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-300 truncate">
+                            {currentLang === 'zh' ? item.nameEn : item.name}
+                          </div>
+                        </div>
                       </div>
-                      <ExternalLink className="h-3 w-3 text-gray-500 group-hover:text-[#01847E] transition-colors duration-300" />
-                    </div>
-                    <div className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors duration-300 line-clamp-2">
-                      {currentLang === 'zh' ? item.nameEn : item.name}
+                      <ExternalLink className="h-3 w-3 text-gray-500 group-hover:text-[#01847E] transition-colors duration-300 flex-shrink-0 ml-2" />
                     </div>
                     {/* 悬停时显示的重点领域 */}
-                    <div className="absolute left-0 right-0 bottom-full mb-2 p-3 bg-gray-900 border border-[#01847E]/30 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute left-0 right-0 bottom-full mb-2 p-2 bg-gray-900 border border-[#01847E]/30 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50 transform translate-y-1 group-hover:translate-y-0">
                       <div className="text-xs text-gray-300 leading-relaxed max-w-xs">
                         {item.focus}
                       </div>
-                      <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900" />
+                      <div className="absolute top-full left-2 w-0 h-0 border-l-3 border-r-3 border-t-3 border-transparent border-t-gray-900" />
                     </div>
                   </div>
                 </a>)}
