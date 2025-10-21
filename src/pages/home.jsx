@@ -1,492 +1,737 @@
 // @ts-ignore;
 import React, { useState, useEffect, useRef } from 'react';
 // @ts-ignore;
-import { Button, useToast } from '@/components/ui';
+import { Button, Input } from '@/components/ui';
 // @ts-ignore;
-import { ArrowRight, Play, CheckCircle, BarChart3, Zap, Shield, Globe, Users, TrendingUp, Award, Menu, X, ChevronDown, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, ArrowUp, Cpu } from 'lucide-react';
+import { Zap, DollarSign, Shield, Plug, Brain, Cog, Truck, Wind, Calculator, Check, Play, ArrowRight, Mail, Battery } from 'lucide-react';
 
-// @ts-ignore;
-import ROICalculator from '@/components/ROICalculator';
-// @ts-ignore;
-import ContactForm from '@/components/ContactForm';
-// @ts-ignore;
-import FloatingNavigation from '@/components/FloatingNavigation';
-// @ts-ignore;
+// 导入组件
 import ParticleBackground from '@/components/ParticleBackground';
-// @ts-ignore;
 import AnimatedSection from '@/components/AnimatedSection';
-// @ts-ignore;
 import HoverCard from '@/components/HoverCard';
-// @ts-ignore;
 import MilestoneTimeline from '@/components/MilestoneTimeline';
-// @ts-ignore;
 import Navigation from '@/components/Navigation';
-// @ts-ignore;
 import HeroSection from '@/components/HeroSection';
-// @ts-ignore;
 import Footer from '@/components/Footer';
-const Home = props => {
+import ROICalculator from '@/components/ROICalculator';
+import ContactForm from '@/components/ContactForm';
+import FloatingNavigation from '@/components/FloatingNavigation';
+
+// 语言配置
+const translations = {
+  zh: {
+    navigation: {
+      home: '首页',
+      value: '核心优势',
+      tech: '技术参数',
+      apps: '应用场景',
+      roi: '投资回报',
+      brand: '联系我们'
+    },
+    hero: {
+      title: '⚡ ECOSYN：为百吨级公路列车重塑低碳未来',
+      subtitle: '全球首个为公路列车量身定制的智能电驱系统。\n即插即用，立减80%燃料成本，零改装即可上路。',
+      features: [{
+        title: '≥80% 燃料成本立减',
+        desc: '智能能量管理优化'
+      }, {
+        title: '2400 kWh 超大能量存储',
+        desc: '模块化储能架构'
+      }, {
+        title: '0% 现有车队改装需求',
+        desc: '即插即用设计'
+      }],
+      cta1: '🔢 立即计算 ROI',
+      cta2: '🎥 预约技术演示'
+    },
+    value: {
+      title: 'ECOSYN 架构：驱动未来的智能能源系统',
+      subtitle: '以成本削减、智能兼容与安全稳定三大核心优势，定义新能源公路列车的下一代标准。',
+      cards: [{
+        title: '成本削减引擎',
+        subtitle: '成本效益的革命，从80%开始。',
+        description: 'ECOSYN 的电驱动系统承担了牵引车的大部分功率负载，通过 AI 优化能量管理 (VIS)，最大化制动能量回收与能耗效率。在典型干线运输场景下，燃油成本削减可超过 80%。',
+        features: ['AI 能量优化', '制动能量回收', '80% 成本削减']
+      }, {
+        title: '智能兼容集成',
+        subtitle: '即插即用，零改装上线。',
+        description: '革命性的 VIS 智能感应系统让 ECOSYN 能与任何主流牵引车毫秒级响应协同。无需车头改装、无需调试、加挂即走。',
+        features: ['毫秒级响应', '零改装设计', '智能传感器']
+      }, {
+        title: '增强安全稳定性',
+        subtitle: '更安全的智能电驱控制。',
+        description: 'ECOSYN 集成了 EASR 防滑系统与 IESS 车身稳定控制系统，搭载 EDC 电子差速控制算法，实时横摆阻尼调整。',
+        features: ['EASR 防滑系统', 'IESS 稳定控制', 'EDC 差速控制']
+      }]
+    },
+    tech: {
+      title: '技术的力量：四大系统协同定义新能源标准',
+      subtitle: '从智能识别到分布式驱动，每一处设计都源自对极限工况的理解。',
+      systems: [{
+        title: 'VIS — Versatile Integration System',
+        description: '让传统柴油车头与领头挂车ECOSYN实现毫秒级协同。',
+        features: ['Intelligent Sensor 智能感知系统', 'Driver Intention Recognition 驾驶意图识别', 'Torque Control 扭矩分配', 'Vehicle Status Recognition & Fault Handling 状态监测和故障处理']
+      }, {
+        title: 'EDC — Electronic Differential Controller',
+        description: '实时动态分配扭矩，让安全性与能效并行。',
+        features: ['EASR 防滑控制', 'IESS 车身稳定系统', 'MEDS 多轴差速控制', 'IRBS 智能制动能量回收']
+      }, {
+        title: 'DDS — Distributed Driveaxle System',
+        description: '支持双电驱桥 /三电驱桥布局，澎湃动力输出，助力高速重载、高效爬坡。',
+        features: ['双电驱桥 / 三电驱桥配置', '峰值扭矩 80,000 Nm / 120,000 Nm', '额定功率 700kW / 1050 kW']
+      }, {
+        title: 'ESS — Energy Storage System',
+        description: 'Drop-and-Hook 快速更换模式，充电时间与装卸时间同步，续航焦虑终结。',
+        features: ['800 kWh / 1600 kWh / 2400 kWh', '模块化储能架构', '兼容快换方案']
+      }],
+      table: {
+        title: '产品配置表',
+        headers: ['型号', '电驱桥配置', '储能容量', '峰值扭矩', '额定功率', '标配系统'],
+        rows: [{
+          model: 'EcoSyn One',
+          axles: '双电驱桥',
+          battery: '800 kWh',
+          torque: '80000Nm',
+          power: '700kW',
+          systems: 'VIS'
+        }, {
+          model: 'EcoSyn Pro',
+          axles: '双电驱桥',
+          battery: '1600kWh',
+          torque: '80000Nm',
+          power: '700kW',
+          systems: 'VIS + EDC'
+        }, {
+          model: 'EcoSyn Max',
+          axles: '三电驱桥',
+          battery: '2400kWh',
+          torque: '120000Nm',
+          power: '1050kW',
+          systems: 'VIS + EDC'
+        }]
+      }
+    },
+    apps: {
+      title: '让能源转型发生在每一公里。',
+      scenarios: [{
+        title: '公路列车场景',
+        description: '在长距离高载运输中，ECOSYN 以分布式电驱承担主牵引力，有效削减柴油消耗 80% 以上，大幅提升运营效率与利润空间。',
+        highlights: ['80% 燃料削减', '提升运营效率', '增加利润空间']
+      }, {
+        title: '电能配送场景',
+        description: 'ECOSYN 支持绿色能源的灵活运输，将风电、光伏或富余电能从电厂送往负载边缘。在电网不足或离网地区，提供高效的电能移动方案。',
+        highlights: ['绿色能源运输', '离网解决方案', '灵活配送']
+      }]
+    },
+    roi: {
+      title: '看见回报，计算未来。',
+      subtitle: '通过简单输入，即可量化节能收益与回本周期。',
+      description: '我们的智能ROI计算器将根据您的运营情况，为您提供详细的投资回报分析，包括成本节省、投资回收期和环保效益。',
+      features: ['智能推荐最适合的ECOSYN型号', '精准计算年节省成本和投资回收期', '对比购买与租赁两种合作方式', '量化CO₂减排贡献'],
+      cta1: '📊 开始计算投资回报',
+      cta2: '🤝 定制化财务分析'
+    },
+    brand: {
+      title: 'HILLSEA：高能耗场景新能源科技先驱。',
+      intro: {
+        title: '品牌介绍',
+        description: 'HILLSEA 专注于为公路、矿山、港口等高能耗场景提供整体新能源解决方案。以智能算法与电驱技术驱动能源转型，让每一吨能量都更高效、更清洁、更可持续。'
+      },
+      milestones: {
+        title: '产品发展里程碑',
+        subtitle: '从创新理念到行业标杆，ECOSYN 不断突破技术边界，重新定义新能源运输标准。',
+        events: [{
+          year: '2022',
+          title: 'ECOSYN 1.0 美国市场发布',
+          description: '成功在美国市场推出首款ECOSYN 1.0产品，开启新能源公路列车商业化进程。',
+          icon: 'rocket'
+        }, {
+          year: '2023',
+          title: 'ECOSYN 1.5 研发完成',
+          description: '完成ECOSYN 1.5版本研发，在能量效率和系统集成方面取得重大突破。',
+          icon: 'gear'
+        }, {
+          year: '2024',
+          title: 'ECOSYN 1.0 完成10万公里测试',
+          description: 'ECOSYN 1.0成功完成10万公里实地测试，验证了产品在极端工况下的可靠性和耐久性。',
+          icon: 'check'
+        }, {
+          year: '2025',
+          title: 'ECOSYN 2.0 研发完成',
+          description: '全新ECOSYN 2.0研发完成，在智能化、能效和可靠性方面实现全面升级。',
+          icon: 'star'
+        }]
+      },
+      mission: {
+        title: '品牌使命',
+        description: '加速高能耗场景向可持续能源转型。我们的目标：帮助客户实现 ESG 合规与零排放目标。'
+      },
+      contact: {
+        title: '联系我们获取定制方案',
+        name: '姓名',
+        company: '公司名称',
+        email: '邮箱',
+        message: '留言/需求说明',
+        submit: '📧 提交咨询'
+      }
+    },
+    footer: {
+      company: 'HILLSEA 新能源科技有限公司',
+      contact: '联系方式',
+      quickLinks: '快速链接',
+      followUs: '关注我们',
+      links: ['产品介绍', '技术支持', '案例研究', '新闻动态'],
+      copyright: '© 2025 HILLSEA All Rights Reserved'
+    }
+  },
+  en: {
+    navigation: {
+      home: 'Home',
+      value: 'Advantages',
+      tech: 'Technology',
+      apps: 'Applications',
+      roi: 'ROI',
+      brand: 'Contact Us'
+    },
+    hero: {
+      title: '⚡ ECOSYN: Reshaping the Low-Carbon Future for Heavy-Duty Road Trains',
+      subtitle: 'The world\'s first intelligent electric drive system tailored for road trains.\nPlug-and-play, instant 80% fuel cost reduction, zero modification required.',
+      features: [{
+        title: '≥80% Fuel Cost Reduction',
+        desc: 'Smart energy management optimization'
+      }, {
+        title: '2400 kWh Ultra-Large Energy Storage',
+        desc: 'Modular energy storage architecture'
+      }, {
+        title: '0% Fleet Modification Required',
+        desc: 'Plug-and-play design'
+      }],
+      cta1: '🔢 Calculate ROI Now',
+      cta2: '🎥 Schedule Technical Demo'
+    },
+    value: {
+      title: 'ECOSYN Architecture: Intelligent Energy System Driving the Future',
+      subtitle: 'Defining the next generation standard for new energy road trains with three core advantages: cost reduction, intelligent compatibility, and safety stability.',
+      cards: [{
+        title: 'Cost Reduction Engine',
+        subtitle: 'The cost-effectiveness revolution starts at 80%.',
+        description: 'ECOSYN\'s electric drive system handles most of the power load of the tractor, maximizing braking energy recovery and energy efficiency through AI-optimized energy management (VIS). In typical long-distance transport scenarios, fuel cost reduction can exceed 80%.',
+        features: ['AI Energy Optimization', 'Braking Energy Recovery', '80% Cost Reduction']
+      }, {
+        title: 'Intelligent Compatibility Integration',
+        subtitle: 'Plug-and-play, zero modification deployment.',
+        description: 'The revolutionary VIS intelligent sensing system enables ECOSYN to achieve millisecond-level response coordination with any mainstream tractor. No tractor modification, no debugging, hook-up and go.',
+        features: ['Millisecond Response', 'Zero Modification Design', 'Smart Sensors']
+      }, {
+        title: 'Enhanced Safety Stability',
+        subtitle: 'Safer intelligent electric drive control.',
+        description: 'ECOSYN integrates EASR anti-skid system and IESS vehicle stability control system, equipped with EDC electronic differential control algorithm for real-time yaw damping adjustment.',
+        features: ['EASR Anti-skid System', 'IESS Stability Control', 'EDC Differential Control']
+      }]
+    },
+    tech: {
+      title: 'The Power of Technology: Four Systems Collaboratively Defining New Energy Standards',
+      subtitle: 'From intelligent recognition to distributed drive, every design originates from understanding extreme operating conditions.',
+      systems: [{
+        title: 'VIS — Versatile Integration System',
+        description: 'Enabling millisecond-level coordination between traditional diesel tractors and leading ECOSYN trailers.',
+        features: ['Intelligent Sensor System', 'Driver Intention Recognition', 'Torque Control', 'Vehicle Status Recognition & Fault Handling']
+      }, {
+        title: 'EDC — Electronic Differential Controller',
+        description: 'Real-time dynamic torque distribution, enabling parallel safety and energy efficiency.',
+        features: ['EASR Anti-skid Control', 'IESS Vehicle Stability System', 'MEDS Multi-axle Differential Control', 'IRBS Intelligent Braking Energy Recovery']
+      }, {
+        title: 'DDS — Distributed Driveaxle System',
+        description: 'Supporting dual/triple drive axle configurations, delivering powerful output for high-speed heavy-load and efficient climbing.',
+        features: ['Dual/Triple Drive Axle Configuration', 'Peak Torque 80,000 Nm / 120,000 Nm', 'Rated Power 700kW / 1050 kW']
+      }, {
+        title: 'ESS — Energy Storage System',
+        description: 'Drop-and-Hook quick replacement mode, charging time synchronized with loading/unloading time, ending range anxiety.',
+        features: ['800 kWh / 1600 kWh / 2400 kWh', 'Modular Energy Storage Architecture', 'Compatible with Quick Swap']
+      }],
+      table: {
+        title: 'Product Configuration Table',
+        headers: ['Model', 'Drive Axle Config', 'Energy Storage', 'Peak Torque', 'Rated Power', 'Standard Systems'],
+        rows: [{
+          model: 'EcoSyn One',
+          axles: 'Dual Drive Axle',
+          battery: '800 kWh',
+          torque: '80000Nm',
+          power: '700kW',
+          systems: 'VIS'
+        }, {
+          model: 'EcoSyn Pro',
+          axles: 'Dual Drive Axle',
+          battery: '1600kWh',
+          torque: '80000Nm',
+          power: '700kW',
+          systems: 'VIS + EDC'
+        }, {
+          model: 'EcoSyn Max',
+          axles: 'Triple Drive Axle',
+          battery: '2400kWh',
+          torque: '120000Nm',
+          power: '1050kW',
+          systems: 'VIS + EDC'
+        }]
+      }
+    },
+    apps: {
+      title: 'Making Energy Transition Happen Every Kilometer.',
+      scenarios: [{
+        title: 'Road Train Scenario',
+        description: 'In long-distance high-load transportation, ECOSYN uses distributed electric drive to handle main traction, effectively reducing diesel consumption by over 80%, significantly improving operational efficiency and profit margins.',
+        highlights: ['80% Fuel Reduction', 'Improved Operational Efficiency', 'Increased Profit Margins']
+      }, {
+        title: 'Power Distribution Scenario',
+        description: 'ECOSYN supports flexible transportation of green energy, delivering wind, solar, or surplus electricity from power plants to load edges. Providing efficient mobile power solutions in areas with insufficient or off-grid power.',
+        highlights: ['Green Energy Transport', 'Off-grid Solutions', 'Flexible Distribution']
+      }]
+    },
+    roi: {
+      title: 'See Returns, Calculate the Future.',
+      subtitle: 'Quantify energy savings and payback period through simple inputs.',
+      description: 'Our intelligent ROI calculator provides detailed investment return analysis based on your operational conditions, including cost savings, payback period, and environmental benefits.',
+      features: ['Smart recommendation of the most suitable ECOSYN model', 'Precise calculation of annual savings and payback period', 'Comparison of purchase and leasing options', 'Quantification of CO₂ reduction contribution'],
+      cta1: '📊 Start ROI Calculation',
+      cta2: '🤝 Customized Financial Analysis'
+    },
+    brand: {
+      title: 'HILLSEA: Pioneer in New Energy Technology for High-Energy Consumption Scenarios.',
+      intro: {
+        title: 'Brand Introduction',
+        description: 'HILLSEA specializes in providing integrated new energy solutions for high-energy consumption scenarios such as highways, mines, and ports. Driving energy transition with intelligent algorithms and electric drive technology, making every ton of energy more efficient, cleaner, and more sustainable.'
+      },
+      milestones: {
+        title: 'Product Development Milestones',
+        subtitle: 'From innovative concept to industry benchmark, ECOSYN continuously breaks technological boundaries, redefining new energy transportation standards.',
+        events: [{
+          year: '2022',
+          title: 'ECOSYN 1.0 Launched in U.S. Market',
+          description: 'Successfully launched the first ECOSYN 1.0 product in the U.S. market, initiating the commercialization process of new energy road trains.',
+          icon: 'rocket'
+        }, {
+          year: '2023',
+          title: 'ECOSYN 1.5 Development Completed',
+          description: 'Completed development of ECOSYN 1.5 version, achieving major breakthroughs in energy efficiency and system integration.',
+          icon: 'gear'
+        }, {
+          year: '2024',
+          title: 'ECOSYN 1.0 Completed 100,000 km Testing',
+          description: 'ECOSYN 1.0 successfully completed 100,000 km of field testing, verifying product reliability and durability under extreme operating conditions.',
+          icon: 'check'
+        }, {
+          year: '2025',
+          title: 'ECOSYN 2.0 Development Completed',
+          description: 'All-new ECOSYN 2.0 development completed, achieving comprehensive upgrades in intelligence, energy efficiency, and reliability.',
+          icon: 'star'
+        }]
+      },
+      mission: {
+        title: 'Brand Mission',
+        description: 'Accelerating the transition to sustainable energy in high-energy consumption scenarios. Our goal: helping clients achieve ESG compliance and zero-emission targets.'
+      },
+      contact: {
+        title: 'Contact Us for Custom Solutions',
+        name: 'Name',
+        company: 'Company Name',
+        email: 'Email',
+        message: 'Message/Requirements',
+        submit: '📧 Submit Consultation'
+      }
+    },
+    footer: {
+      company: 'HILLSEA New Energy Technology Co., Ltd.',
+      contact: 'Contact Information',
+      quickLinks: 'Quick Links',
+      followUs: 'Follow Us',
+      links: ['Products', 'Technical Support', 'Case Studies', 'News'],
+      copyright: '© 2025 HILLSEA All Rights Reserved'
+    }
+  }
+};
+export default function HomePage(props) {
   const {
-    $w,
-    style
+    $w
   } = props;
-  const {
-    toast
-  } = useToast();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('zh');
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [activeSection, setActiveSection] = useState('home');
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-  const heroRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({
-    x: 0,
-    y: 0
+  const [language, setLanguage] = useState('zh');
+  const [activeSection, setActiveSection] = useState('hero');
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    message: ''
   });
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [showROICalculator, setShowROICalculator] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const t = translations[language];
 
-  // 监听鼠标移动
-  useEffect(() => {
-    const handleMouseMove = e => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  // Refs for sections
+  const heroRef = useRef(null);
+  const valueRef = useRef(null);
+  const techRef = useRef(null);
+  const appsRef = useRef(null);
+  const milestonesRef = useRef(null);
+  const roiRef = useRef(null);
+  const brandRef = useRef(null);
 
-  // 监听滚动事件
+  // 可用页面部分
+  const availableSections = ['hero', 'value', 'tech', 'apps', 'milestones', 'roi', 'brand'];
+
+  // 滚动视差效果
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setScrollY(scrollPosition);
-      setShowBackToTop(scrollPosition > 300);
-      setIsScrolled(scrollPosition > 50);
-
-      // 更新活跃section
-      const sections = ['home', 'products', 'advantages', 'roi', 'contact'];
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      if (currentSection) {
-        setActiveSection(currentSection);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      const scrollPosition = currentScrollY + 100;
+      if (heroRef.current && scrollPosition >= heroRef.current.offsetTop && scrollPosition < valueRef.current.offsetTop) {
+        setActiveSection('hero');
+      } else if (valueRef.current && scrollPosition >= valueRef.current.offsetTop && scrollPosition < techRef.current.offsetTop) {
+        setActiveSection('value');
+      } else if (techRef.current && scrollPosition >= techRef.current.offsetTop && scrollPosition < appsRef.current.offsetTop) {
+        setActiveSection('tech');
+      } else if (appsRef.current && scrollPosition >= appsRef.current.offsetTop && scrollPosition < milestonesRef.current.offsetTop) {
+        setActiveSection('apps');
+      } else if (milestonesRef.current && scrollPosition >= milestonesRef.current.offsetTop && scrollPosition < roiRef.current.offsetTop) {
+        setActiveSection('milestones');
+      } else if (roiRef.current && scrollPosition >= roiRef.current.offsetTop && scrollPosition < brandRef.current.offsetTop) {
+        setActiveSection('roi');
+      } else if (brandRef.current) {
+        setActiveSection('brand');
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // 语言切换
-  const handleLanguageChange = lang => {
-    setCurrentLang(lang);
-    // 触发全局语言切换事件
-    window.dispatchEvent(new CustomEvent('languageChange', {
-      detail: {
-        language: lang
-      }
-    }));
-  };
-
-  // 滚动到指定部分
-  const scrollToSection = sectionId => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  // 滚动到顶部
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
+  const scrollToSection = ref => {
+    ref.current?.scrollIntoView({
       behavior: 'smooth'
     });
   };
-
-  // 多语言内容
-  const content = {
-    zh: {
-      nav: {
-        home: '首页',
-        products: '产品',
-        advantages: '优势',
-        roi: '投资回报',
-        contact: '联系我们'
-      },
-      hero: {
-        title: '新能源智能重卡',
-        subtitle: '引领绿色运输革命',
-        description: '融合尖端科技与环保理念，打造高效、智能、零排放的重卡解决方案',
-        cta1: '了解产品',
-        cta2: '联系我们',
-        videoTitle: '观看产品演示'
-      },
-      products: {
-        title: '智能电驱系统',
-        subtitle: '高效动力，绿色未来',
-        features: ['高效节能', '智能控制', '可靠耐用', '维护便捷'],
-        specs: {
-          power: '最大功率',
-          powerValue: '400kW',
-          torque: '最大扭矩',
-          torqueValue: '2500Nm',
-          range: '续航里程',
-          rangeValue: '500km',
-          charge: '快充时间',
-          chargeValue: '30min'
-        }
-      },
-      advantages: {
-        title: '核心优势',
-        subtitle: '技术领先，品质卓越',
-        items: [{
-          icon: 'zap',
-          title: '高效节能',
-          description: '采用最新能源管理技术，能耗降低30%，续航提升20%'
-        }, {
-          icon: 'shield',
-          title: '安全可靠',
-          description: '多重安全防护系统，通过国际权威认证，保障行车安全'
-        }, {
-          icon: 'cpu',
-          title: '智能控制',
-          description: 'AI智能驾驶辅助系统，实时优化路线，提升运输效率'
-        }, {
-          icon: 'globe',
-          title: '环保零排',
-          description: '零排放设计，符合全球最严环保标准，助力碳中和'
-        }]
-      },
-      roi: {
-        title: '投资回报分析',
-        subtitle: '经济效益显著，投资回报快速',
-        benefits: [{
-          title: '燃料成本节省',
-          value: '40%',
-          description: '相比传统燃油车，燃料成本大幅降低'
-        }, {
-          title: '维护成本降低',
-          value: '50%',
-          description: '电动化设计，维护更简单，成本更低'
-        }, {
-          title: '投资回收期',
-          value: '2-3年',
-          description: '快速收回投资成本，长期收益可观'
-        }, {
-          title: '政府补贴',
-          value: '最高30万',
-          description: '享受国家新能源政策补贴，进一步降低成本'
-        }]
-      },
-      contact: {
-        title: '联系我们',
-        subtitle: '专业团队为您提供定制化解决方案',
-        form: {
-          name: '姓名',
-          phone: '电话',
-          email: '邮箱',
-          company: '公司',
-          message: '留言',
-          submit: '发送消息'
-        },
-        info: {
-          address: '上海市闵行区剑川路955号',
-          phone: '+86 755-8888-9999',
-          email: 'info@hillsea.com'
-        }
-      }
-    },
-    en: {
-      nav: {
-        home: 'Home',
-        products: 'Products',
-        advantages: 'Advantages',
-        roi: 'ROI',
-        contact: 'Contact'
-      },
-      hero: {
-        title: 'New Energy Smart Truck',
-        subtitle: 'Leading Green Transportation Revolution',
-        description: 'Integrating cutting-edge technology with environmental protection to create efficient, intelligent, zero-emission truck solutions',
-        cta1: 'Learn More',
-        cta2: 'Contact Us',
-        videoTitle: 'Watch Product Demo'
-      },
-      products: {
-        title: 'Smart Electric Drive System',
-        subtitle: 'Efficient Power, Green Future',
-        features: ['High Efficiency', 'Smart Control', 'Reliable & Durable', 'Easy Maintenance'],
-        specs: {
-          power: 'Max Power',
-          powerValue: '400kW',
-          torque: 'Max Torque',
-          torqueValue: '2500Nm',
-          range: 'Range',
-          rangeValue: '500km',
-          charge: 'Fast Charge',
-          chargeValue: '30min'
-        }
-      },
-      advantages: {
-        title: 'Core Advantages',
-        subtitle: 'Leading Technology, Excellent Quality',
-        items: [{
-          icon: 'zap',
-          title: 'High Efficiency',
-          description: 'Latest energy management technology, 30% less energy consumption, 20% longer range'
-        }, {
-          icon: 'shield',
-          title: 'Safety & Reliability',
-          description: 'Multiple safety protection systems, internationally certified for driving safety'
-        }, {
-          icon: 'cpu',
-          title: 'Smart Control',
-          description: 'AI intelligent driving assistance system, real-time route optimization, improved transport efficiency'
-        }, {
-          icon: 'globe',
-          title: 'Zero Emission',
-          description: 'Zero emission design, meets the world\'s strictest environmental standards, contributes to carbon neutrality'
-        }]
-      },
-      roi: {
-        title: 'Return on Investment Analysis',
-        subtitle: 'Significant Economic Benefits, Quick ROI',
-        benefits: [{
-          title: 'Fuel Cost Savings',
-          value: '40%',
-          description: 'Significantly lower fuel costs compared to traditional fuel vehicles'
-        }, {
-          title: 'Maintenance Cost Reduction',
-          value: '50%',
-          description: 'Electric design, simpler maintenance, lower costs'
-        }, {
-          title: 'Payback Period',
-          value: '2-3 years',
-          description: 'Quick investment recovery, considerable long-term returns'
-        }, {
-          title: 'Government Subsidies',
-          value: 'Up to ¥300K',
-          description: 'Enjoy national new energy policy subsidies to further reduce costs'
-        }]
-      },
-      contact: {
-        title: 'Contact Us',
-        subtitle: 'Professional team provides customized solutions',
-        form: {
-          name: 'Name',
-          phone: 'Phone',
-          email: 'Email',
-          company: 'Company',
-          message: 'Message',
-          submit: 'Send Message'
-        },
-        info: {
-          address: 'No. 955 Jianchuan Road, Minhang District, Shanghai',
-          phone: '+86 755-8888-9999',
-          email: 'info@hillsea.com'
-        }
-      }
-    }
+  const handleContactSubmit = contactData => {
+    alert(language === 'zh' ? '感谢您的联系，我们的顾问将在 24 小时内回复。' : 'Thank you for contacting us. Our consultant will reply within 24 hours.');
   };
-  const t = content[currentLang];
+  const handleBrandContactSubmit = e => {
+    e.preventDefault();
+    alert(language === 'zh' ? '感谢您的联系，我们的顾问将在 24 小时内回复。' : 'Thank you for contacting us. Our consultant will reply within 24 hours.');
+    setFormData({
+      name: '',
+      company: '',
+      email: '',
+      message: ''
+    });
+  };
 
-  // 获取图标组件
-  const getIcon = iconName => {
-    const icons = {
-      zap: Zap,
-      shield: Shield,
-      cpu: Cpu,
-      globe: Globe
+  // 处理悬浮导航点击
+  const handleFloatingNavClick = sectionId => {
+    const refs = {
+      hero: heroRef,
+      value: valueRef,
+      tech: techRef,
+      apps: appsRef,
+      milestones: milestonesRef,
+      roi: roiRef,
+      brand: brandRef
     };
-    return icons[iconName] || Zap;
+    scrollToSection(refs[sectionId]);
   };
-  return <div style={style} className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 overflow-x-hidden">
-      {/* 导航栏 */}
-      <Navigation currentLang={currentLang} setCurrentLang={handleLanguageChange} isScrolled={isScrolled} activeSection={activeSection} scrollToSection={scrollToSection} />
+  return <div className="min-h-screen bg-gradient-to-br from-gray-900 via-[#0D7E9C] to-[#01847E] text-white overflow-x-hidden">
+      {/* 增强粒子动画背景 */}
+      <ParticleBackground />
 
-      {/* Hero Section */}
-      <HeroSection currentLang={currentLang} scrollToSection={scrollToSection} />
+      {/* 增强导航栏 */}
+      <Navigation language={language} setLanguage={setLanguage} activeSection={activeSection} scrollToSection={scrollToSection} heroRef={heroRef} valueRef={valueRef} techRef={techRef} appsRef={appsRef} roiRef={roiRef} brandRef={brandRef} scrollY={scrollY} t={t} />
 
-      {/* 产品展示部分 */}
-      <AnimatedSection id="products" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.products.title}</h2>
-            <p className="text-xl text-gray-600">{t.products.subtitle}</p>
-          </div>
+      {/* Enhanced Hero Section */}
+      <section ref={heroRef}>
+        <HeroSection t={t} scrollY={scrollY} setShowROICalculator={setShowROICalculator} setShowContactForm={setShowContactForm} />
+      </section>
+
+      {/* Enhanced Value Section */}
+      <section ref={valueRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/40">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 text-white">
+              {t.value.title}
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-200 text-center mb-12 sm:mb-16 max-w-4xl mx-auto">
+              {t.value.subtitle}
+            </p>
+          </AnimatedSection>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                {t.products.features.map((feature, index) => <div key={index} className="flex items-center space-x-2">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="text-gray-700">{feature}</span>
-                  </div>)}
-              </div>
-              
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-[#01847E]">{t.products.specs.powerValue}</div>
-                  <div className="text-sm text-gray-600">{t.products.specs.power}</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-[#01847E]">{t.products.specs.torqueValue}</div>
-                  <div className="text-sm text-gray-600">{t.products.specs.torque}</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-[#01847E]">{t.products.specs.rangeValue}</div>
-                  <div className="text-sm text-gray-600">{t.products.specs.range}</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-[#01847E]">{t.products.specs.chargeValue}</div>
-                  <div className="text-sm text-gray-600">{t.products.specs.charge}</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="relative">
-              <img src="https://picsum.photos/seed/electric-truck/600/400.jpg" alt="Electric Truck" className="rounded-lg shadow-lg" />
-              <div className="absolute -bottom-6 -right-6 bg-[#01847E] text-white p-4 rounded-lg shadow-lg">
-                <div className="text-2xl font-bold">500+</div>
-                <div className="text-sm">Happy Clients</div>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            {t.value.cards.map((item, index) => <AnimatedSection key={index} delay={index * 150}>
+                <HoverCard className="group" childrenClassName="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 ${index === 0 ? 'bg-gradient-to-r from-[#01847E] to-[#0D7E9C]' : 'bg-gradient-to-r from-[#0D7E9C] to-[#01847E]'}`}>
+                    {index === 0 && <DollarSign className="h-8 w-8 text-white" />}
+                    {index === 1 && <Plug className="h-8 w-8 text-white" />}
+                    {index === 2 && <Shield className="h-8 w-8 text-white" />}
+                  </div>
+                  <h3 className={`text-xl sm:text-2xl font-bold mb-3 transition-colors duration-300 ${index === 0 ? 'text-[#01847E] group-hover:text-[#0D7E9C]' : 'text-[#0D7E9C] group-hover:text-[#01847E]'}`}>{item.title}</h3>
+                  <h4 className="text-lg font-semibold text-white mb-4">{item.subtitle}</h4>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{item.description}</p>
+                  <ul className="space-y-2">
+                    {item.features.map((feature, idx) => <li key={idx} className="flex items-center text-gray-200 transition-all duration-300 group-hover:translate-x-1">
+                        <Check className="h-4 w-4 text-green-400 mr-2 flex-shrink-0" />
+                        {feature}
+                      </li>)}
+                  </ul>
+                </HoverCard>
+              </AnimatedSection>)}
           </div>
         </div>
-      </AnimatedSection>
+      </section>
 
-      {/* 统一背景部分：核心优势到投资回报 */}
-      <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-        {/* 背景装饰 */}
-        <div className="absolute inset-0">
-          {/* 网格背景 */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+      {/* Enhanced Technology Section */}
+      <section ref={techRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/60">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 text-white">
+              {t.tech.title}
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-200 text-center mb-12 sm:mb-16 max-w-4xl mx-auto">
+              {t.tech.subtitle}
+            </p>
+          </AnimatedSection>
           
-          {/* 动态光效 */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-[#01847E]/10 to-transparent rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-l from-[#0D7E9C]/10 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
-          
-          {/* 扫描线效果 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#01847E]/5 to-transparent animate-pulse" />
-        </div>
-
-        {/* 核心优势部分 */}
-        <AnimatedSection id="advantages" className="relative z-10 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">{t.advantages.title}</h2>
-              <p className="text-xl text-gray-300">{t.advantages.subtitle}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {t.advantages.items.map((item, index) => {
-              const Icon = getIcon(item.icon);
-              return <HoverCard key={index} icon={Icon} title={item.title} description={item.description} />;
-            })}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* 投资回报分析部分 */}
-        <AnimatedSection id="roi" className="relative z-10 py-20 border-t border-gray-700/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">{t.roi.title}</h2>
-              <p className="text-xl text-gray-300">{t.roi.subtitle}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                {t.roi.benefits.map((benefit, index) => <div key={index} className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50 hover:border-[#01847E]/50 transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-semibold text-white">{benefit.title}</h3>
-                      <span className="text-3xl font-bold text-[#01847E]">{benefit.value}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
+            {t.tech.systems.slice(0, 2).map((item, index) => <AnimatedSection key={index} delay={index * 200}>
+                <HoverCard childrenClassName="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#0D7E9C] to-[#01847E] rounded-xl flex items-center justify-center mr-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+                      {index === 0 ? <Brain className="h-6 w-6 text-white" /> : <Cog className="h-6 w-6 text-white" />}
                     </div>
-                    <p className="text-gray-300">{benefit.description}</p>
-                  </div>)}
-              </div>
-              
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 border border-gray-700/50">
-                <ROICalculator currentLang={currentLang} />
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </div>
-
-      {/* 联系我们部分 */}
-      <AnimatedSection id="contact" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.contact.title}</h2>
-            <p className="text-xl text-gray-600">{t.contact.subtitle}</p>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#0D7E9C] mb-3 transition-colors duration-300 group-hover:text-[#01847E]">{item.title}</h3>
+                  </div>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{item.description}</p>
+                  <ul className="space-y-2">
+                    {item.features.map((feature, idx) => <li key={idx} className="flex items-start text-gray-200 transition-all duration-300 group-hover:translate-x-1">
+                        <div className="w-2 h-2 bg-[#0D7E9C] rounded-full mt-2 mr-3 flex-shrink-0 transition-colors duration-300 group-hover:bg-[#01847E]" />
+                        {feature}
+                      </li>)}
+                  </ul>
+                </HoverCard>
+              </AnimatedSection>)}
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <ContactForm currentLang={currentLang} />
-            
-            <div className="space-y-8">
-              <div className="bg-gray-50 rounded-lg p-8">
-                <h3 className="text-2xl font-semibold mb-6 text-gray-900">联系信息</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-[#01847E]" />
-                    <span className="text-gray-700">{t.contact.info.address}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
+            {t.tech.systems.slice(2).map((item, index) => <AnimatedSection key={index} delay={index * 200}>
+                <HoverCard childrenClassName="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#0D7E9C] to-[#01847E] rounded-xl flex items-center justify-center mr-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+                      {index === 0 ? <Zap className="h-6 w-6 text-white" /> : <Battery className="h-6 w-6 text-white" />}
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#0D7E9C] mb-3 transition-colors duration-300 group-hover:text-[#01847E]">{item.title}</h3>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-[#01847E]" />
-                    <span className="text-gray-700">{t.contact.info.phone}</span>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{item.description}</p>
+                  <ul className="space-y-2">
+                    {item.features.map((feature, idx) => <li key={idx} className="flex items-start text-gray-200 transition-all duration-300 group-hover:translate-x-1">
+                        <div className="w-2 h-2 bg-[#0D7E9C] rounded-full mt-2 mr-3 flex-shrink-0 transition-colors duration-300 group-hover:bg-[#01847E]" />
+                        {feature}
+                      </li>)}
+                  </ul>
+                </HoverCard>
+              </AnimatedSection>)}
+          </div>
+          
+          {/* Enhanced Product Configuration Table */}
+          <AnimatedSection delay={300}>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 overflow-hidden">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#0D7E9C] mb-8 text-center">{t.tech.table.title}</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b border-white/20">
+                      {t.tech.table.headers.map((header, idx) => <th key={idx} className="pb-4 text-sm sm:text-base font-semibold text-[#0D7E9C]">
+                          {header}
+                        </th>)}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {t.tech.table.rows.map((product, index) => <tr key={index} className="border-b border-white/10 hover:bg-white/5 transition-all duration-300 group">
+                        <td className="py-4 font-semibold text-[#01847E] transition-colors duration-300 group-hover:text-[#0D7E9C]">{product.model}</td>
+                        <td className="py-4 text-gray-200">{product.axles}</td>
+                        <td className="py-4 text-gray-200">{product.battery}</td>
+                        <td className="py-4 text-gray-200">{product.torque}</td>
+                        <td className="py-4 text-gray-200">{product.power}</td>
+                        <td className="py-4 text-gray-200">{product.systems}</td>
+                      </tr>)}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Enhanced Applications Section */}
+      <section ref={appsRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/40">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 text-white">
+              {t.apps.title}
+            </h2>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            {t.apps.scenarios.map((item, index) => <AnimatedSection key={index} delay={index * 200}>
+                <HoverCard childrenClassName="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8">
+                  <div className="w-16 h-16 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
+                    {index === 0 ? <Truck className="h-8 w-8 text-white" /> : <Wind className="h-8 w-8 text-white" />}
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-[#01847E]" />
-                    <span className="text-gray-700">{t.contact.info.email}</span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#01847E] mb-4 transition-colors duration-300 group-hover:text-[#0D7E9C]">{item.title}</h3>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{item.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.highlights.map((highlight, idx) => <span key={idx} className="px-3 py-1 bg-[#01847E]/20 text-[#01847E] rounded-full text-sm font-medium transition-all duration-300 hover:bg-[#01847E]/30 hover:scale-105">
+                        {highlight}
+                      </span>)}
                   </div>
+                </HoverCard>
+              </AnimatedSection>)}
+          </div>
+        </div>
+      </section>
+
+      {/* Product Milestones Section */}
+      <section ref={milestonesRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/60">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection>
+            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-4 text-white">
+              {t.brand.milestones.title}
+            </h3>
+            <p className="text-lg text-gray-200 text-center mb-12 max-w-3xl mx-auto">
+              {t.brand.milestones.subtitle}
+            </p>
+          </AnimatedSection>
+          <MilestoneTimeline milestones={t.brand.milestones.events} language={language} />
+        </div>
+      </section>
+
+      {/* Enhanced ROI Section */}
+      <section ref={roiRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/40">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 text-white">
+              {t.roi.title}
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-200 text-center mb-12 sm:mb-16 max-w-4xl mx-auto">
+              {t.roi.subtitle}
+            </p>
+          </AnimatedSection>
+          
+          {/* ROI Calculator Features */}
+          <AnimatedSection delay={200}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#0D7E9C] to-[#01847E] rounded-2xl flex items-center justify-center mb-6">
+                  <Calculator className="h-8 w-8 text-white" />
                 </div>
+                <h3 className="text-2xl font-bold text-[#0D7E9C] mb-4">{t.roi.title}</h3>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  {t.roi.description}
+                </p>
+                <ul className="space-y-3">
+                  {t.roi.features.map((feature, idx) => <li key={idx} className="flex items-start text-gray-200">
+                      <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>)}
+                </ul>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-8">
-                <h3 className="text-2xl font-semibold mb-6 text-gray-900">关注我们</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 bg-[#01847E] text-white rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                    <Facebook className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-[#01847E] text-white rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                    <Twitter className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-[#01847E] text-white rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-[#01847E] text-white rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-[#01847E] text-white rounded-full flex items-center justify-center hover:bg-[#0D7E9C] transition-colors duration-300">
-                    <Youtube className="h-5 w-5" />
-                  </a>
+              <div className="bg-gradient-to-br from-[#0D7E9C]/10 to-[#01847E]/10 border border-[#0D7E9C]/30 rounded-2xl p-8 flex flex-col justify-center">
+                <h3 className="text-2xl font-bold text-[#0D7E9C] mb-6">
+                  {language === 'zh' ? '准备好计算您的投资回报了吗？' : 'Ready to Calculate Your ROI?'}
+                </h3>
+                <p className="text-gray-300 mb-8 leading-relaxed">
+                  {language === 'zh' ? '只需几分钟，即可获得详细的投资回报分析报告，帮助您做出明智的商业决策。' : 'Get a detailed investment return analysis in just a few minutes to help you make informed business decisions.'}
+                </p>
+                <div className="space-y-4">
+                  <Button onClick={() => setShowROICalculator(true)} className="w-full bg-[#0D7E9C] hover:bg-[#0D7E9C]/90 text-white px-6 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl group">
+                    <span className="flex items-center justify-center">
+                      <Calculator className="mr-3 h-5 w-5" />
+                      {t.roi.cta1}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </Button>
+                  <Button onClick={() => setShowContactForm(true)} variant="outline" className="w-full border-2 border-[#0D7E9C] text-[#0D7E9C] hover:bg-[#0D7E9C]/10 px-6 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+                    {t.roi.cta2}
+                  </Button>
                 </div>
               </div>
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Enhanced Brand Section */}
+      <section ref={brandRef} className="py-16 sm:py-20 lg:py-24 px-4 bg-black/60">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 text-white">
+              {t.brand.title}
+            </h2>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <AnimatedSection delay={200}>
+              <div>
+                <h3 className="text-2xl font-bold text-[#0D7E9C] mb-6 transition-colors duration-300 hover:text-[#01847E]">{t.brand.intro.title}</h3>
+                <p className="text-gray-300 mb-8 leading-relaxed">
+                  {t.brand.intro.description}
+                </p>
+                <h4 className="text-xl font-semibold text-[#01847E] mb-4 transition-colors duration-300 hover:text-[#0D7E9C]">{t.brand.mission.title}</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  {t.brand.mission.description}
+                </p>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection delay={400}>
+              <div>
+                <h3 className="text-2xl font-bold text-[#0D7E9C] mb-6">{t.brand.contact.title}</h3>
+                <form onSubmit={handleBrandContactSubmit} className="space-y-4">
+                  <Input type="text" value={formData.name} onChange={e => setFormData({
+                  ...formData,
+                  name: e.target.value
+                })} className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-[#0D7E9C] transition-all duration-300 focus:bg-white/15" placeholder={t.brand.contact.name} required />
+                  <Input type="text" value={formData.company} onChange={e => setFormData({
+                  ...formData,
+                  company: e.target.value
+                })} className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-[#0D7E9C] transition-all duration-300 focus:bg-white/15" placeholder={t.brand.contact.company} required />
+                  <Input type="email" value={formData.email} onChange={e => setFormData({
+                  ...formData,
+                  email: e.target.value
+                })} className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-[#0D7E9C] transition-all duration-300 focus:bg-white/15" placeholder={t.brand.contact.email} required />
+                  <textarea value={formData.message} onChange={e => setFormData({
+                  ...formData,
+                  message: e.target.value
+                })} className="w-full bg-white/10 border-white/20 text-white placeholder-gray-400 rounded-lg p-3 h-24 resize-none focus:border-[#0D7E9C] transition-all duration-300 focus:bg-white/15" placeholder={t.brand.contact.message} required />
+                  <Button type="submit" className="w-full bg-[#0D7E9C] hover:bg-[#0D7E9C]/90 text-white py-3 font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl group">
+                    <span className="flex items-center justify-center">
+                      {t.brand.contact.submit}
+                      <Mail className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                    </span>
+                  </Button>
+                </form>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
-      </AnimatedSection>
+      </section>
 
-      {/* 页脚 */}
-      <Footer currentLang={currentLang} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} scrollToSection={scrollToSection} />
+      {/* Enhanced Footer */}
+      <Footer t={t} />
 
-      {/* 返回顶部按钮 */}
-      {showBackToTop && <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-40 hover:scale-110 hover:shadow-2xl group">
-          <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform duration-300" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#01847E] to-[#0D7E9C] rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-        </button>}
+      {/* 悬浮导航 */}
+      <FloatingNavigation sections={availableSections} activeSection={activeSection} onSectionClick={handleFloatingNavClick} language={language} />
+
+      {/* ROI Calculator Modal */}
+      <ROICalculator isOpen={showROICalculator} onClose={() => setShowROICalculator(false)} language={language} />
+
+      {/* Contact Form Modal */}
+      <ContactForm isOpen={showContactForm} onClose={() => setShowContactForm(false)} onSubmit={handleContactSubmit} language={language} />
     </div>;
-};
-export default Home;
+}
