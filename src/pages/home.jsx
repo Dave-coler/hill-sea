@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 // @ts-ignore;
 import { Button, useToast } from '@/components/ui';
 // @ts-ignore;
-import { ArrowRight, Play, CheckCircle, BarChart3, Zap, Shield, Globe, Users, TrendingUp, Award, Menu, X, ChevronDown, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, ArrowUp } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, BarChart3, Zap, Shield, Globe, Users, TrendingUp, Award, Menu, X, ChevronDown, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, ArrowUp, Cpu } from 'lucide-react';
 
 // @ts-ignore;
 import ROICalculator from '@/components/ROICalculator';
